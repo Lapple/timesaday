@@ -4,7 +4,15 @@
         "count": 0
     },
     {
+        "title": "Commit",
+        "count": 0
+    },
+    {
         "title": "Work",
+        "time": 0
+    },
+    {
+        "title": "Rest",
         "time": 0
     }
 ]

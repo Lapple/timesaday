@@ -1,14 +1,14 @@
 .card {
-    width: 25%;
-    border: 1px solid #ccc;
-    text-align: center;
+    margin: 6px;
     padding: 10px 16px;
     box-sizing: border-box;
+    border: 1px solid #ccc;
     -webkit-user-select: none;
        -moz-user-select: none;
         -ms-user-select: none;
             user-select: none;
     cursor: pointer;
+    text-align: center;
     border-radius: 3px;
     box-shadow: 0 1px 0 2px rgba(0, 0, 0, 0.05);
 }

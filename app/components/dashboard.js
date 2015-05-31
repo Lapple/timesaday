@@ -27,17 +27,19 @@ class Dashboard extends Component {
     }
     renderCard(c, index) {
         if (isTimeCard(c)) {
-            return timeCard({
-                card: c,
-                onSave: this.save.bind(this, index),
-                key: index
-            });
+            return D.div({ className: 'dashboard__item', key: index },
+                timeCard({
+                    card: c,
+                    onSave: this.save.bind(this, index)
+                })
+            );
         } else {
-            return countCard({
-                card: c,
-                onSave: this.save.bind(this, index),
-                key: index
-            });
+            return D.div({ className: 'dashboard__item', key: index },
+                countCard({
+                    card: c,
+                    onSave: this.save.bind(this, index)
+                })
+            );
         }
     }
 };
