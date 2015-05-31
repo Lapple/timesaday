@@ -1,0 +1,19 @@
+.card {
+    width: 25%;
+    border: 1px solid #ccc;
+    text-align: center;
+    padding: 10px 16px;
+    box-sizing: border-box;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
+    cursor: pointer;
+    border-radius: 3px;
+    box-shadow: 0 1px 0 2px rgba(0, 0, 0, 0.05);
+}
+
+.card__value {
+    font-size: 2em;
+    line-height: 1.1;
+}
