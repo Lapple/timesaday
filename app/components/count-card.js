@@ -9,7 +9,7 @@ class CountCard extends Component {
     }
     render() {
         return (
-            D.div({ className: 'card', onMouseDown: this.increment.bind(this) },
+            D.div({ className: 'card', onClick: this.increment.bind(this) },
                 D.div({ className: 'card__title' },
                     this.props.card.get('title')
                 ),
