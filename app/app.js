@@ -1,10 +1,10 @@
-var React = require('react');
+import {render, createFactory} from 'react';
+import Dashboard from './components/dashboard';
 
-var Dashboard = require('./components/dashboard');
-var dashboard = React.createFactory(Dashboard);
+let dashboard = createFactory(Dashboard);
 
 document.addEventListener('DOMContentLoaded', function() {
-    React.render(
+    render(
         dashboard(),
         document.getElementById('dashboard'));
 });

@@ -1,57 +1,71 @@
-var React = require('react');
-var D = React.DOM;
+import {Component, DOM as D} from 'react';
+import formatDuration from 'hhmmss';
 
-module.exports = React.createClass({
-    getInitialState: function() {
+class TimeCard extends Component {
+    constructor(props) {
+        super(props);
+        this.state = this._getInitialState();
+        this._tick = this._tick.bind(this);
+    }
+    componentDidMount() {
+        this._timer = setInterval(this._tick, 500);
+    }
+    componentWillUnmount() {
+        clearInterval(this._tick);
+    }
+    _getInitialState() {
         return {
             startTime: null,
             now: null
         };
-    },
-    componentDidMount: function() {
-        this._timer = setInterval(this._tick, 500);
-    },
-    componentWillUnmount: function() {
-        clearInterval(this._tick);
-    },
-    _toggle: function() {
-        if (this._isRunning()) {
+    }
+    toggle() {
+        if (this.isRunning()) {
             this.props.onSave(
                 this.props.card.set(
                     'time',
-                    this._getTotalTime()));
+                    this.getTime()));
 
             this.setState(
-                this.getInitialState());
+                this._getInitialState());
         } else {
             this.setState({
                 startTime: Date.now()
             });
         }
-    },
-    _getTotalTime: function() {
-        var time = this.props.card.get('time');
+    }
+    getTime() {
+        let time = this.props.card.get('time');
 
-        if (this._isRunning()) {
-            var delta = this.state.now - this.state.startTime;
+        if (this.isRunning()) {
+            let delta = this.state.now - this.state.startTime;
+
             return time + Math.max(0, delta);
         } else {
             return time;
         }
-    },
-    _tick: function() {
+    }
+    _tick() {
         this.setState({
             now: Date.now()
         });
-    },
-    _isRunning: function() {
-        return typeof this.state.startTime === 'number';
-    },
-    render: function() {
-        return D.div({ className: 'card', onMouseDown: this._toggle },
-            D.div({ className: 'card__title' },
-                this.props.card.get('title')),
-            D.div({ className: 'card__value' },
-                this._getTotalTime()));
     }
-});
+    isRunning() {
+        return typeof this.state.startTime === 'number';
+    }
+    render() {
+        return (
+            D.div({ className: 'card', onMouseDown: this.toggle.bind(this) },
+                D.div({ className: 'card__title' },
+                    this.props.card.get('title')
+                ),
+                D.div({ className: 'card__value' },
+                    formatDuration(
+                        Math.floor(this.getTime() / 1000))
+                )
+            )
+        );
+    }
+};
+
+export default TimeCard;
