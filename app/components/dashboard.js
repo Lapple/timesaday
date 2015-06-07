@@ -1,5 +1,4 @@
 import {Component, createFactory, DOM as D} from 'react';
-import {fromJS} from 'immutable';
 
 import CountCard from './count-card';
 import TimeCard from './time-card';
@@ -10,24 +9,18 @@ let timeCard = createFactory(TimeCard);
 let newCard = createFactory(NewCard);
 
 class Dashboard extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            cards: fromJS(props.cards)
-        };
-    }
     save(index, value) {
-        this.setState({
-            cards: this.state.cards.set(index, value)
-        });
+        this.props.onChange(
+            this.props.cards.set(index, value)
+        );
     }
     render() {
         return (
             D.div({ className: 'dashboard' },
-                this.state.cards.map(this.renderCard, this),
+                this.props.cards.map(this.renderCard, this),
                 D.div({ className: 'dashboard__item' },
                     newCard({
-                        onSave: this.save.bind(this, this.state.cards.size)
+                        onSave: this.save.bind(this, this.props.cards.size)
                     })
                 )
             )

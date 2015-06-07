@@ -1,13 +1,15 @@
 import {render, createFactory} from 'react';
-import Dashboard from './components/dashboard';
+import App from './components/app';
 
-let dashboard = createFactory(Dashboard);
+let app = createFactory(App);
 
 document.addEventListener('DOMContentLoaded', function() {
-    var cards = JSON.parse(
-        document.getElementById('cards').innerHTML.trim());
+    let cards = JSON.parse(
+        document.getElementById('cards').innerHTML.trim()
+    );
 
     render(
-        dashboard({ cards: cards }),
-        document.getElementById('dashboard'));
+        app({ cards: cards }),
+        document.getElementById('dashboard')
+    );
 });
