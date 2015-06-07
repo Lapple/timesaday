@@ -1,0 +1,27 @@
+{
+  "name": "timesaday",
+  "version": "1.0.0",
+  "description": "Dashboard that collects your vital stats daily",
+  "main": "index.js",
+  "scripts": {
+    "build": "browserify -o app.compiled.js app/app.js",
+    "watch": "watchify -o app.compiled.js app/app.js -v"
+  },
+  "author": "Aziz Yuldoshev",
+  "license": "MIT",
+  "dependencies": {
+    "babelify": "6.1.2",
+    "browserify": "10.2.3",
+    "hhmmss": "1.0.0",
+    "immutable": "3.7.3",
+    "react": "0.13.3"
+  },
+  "devDependencies": {
+    "watchify": "^3.2.1"
+  },
+  "browserify": {
+    "transform": [
+      "babelify"
+    ]
+  }
+}
