@@ -11,6 +11,7 @@
     text-align: center;
     border-radius: 3px;
     box-shadow: 0 1px 0 2px rgba(0, 0, 0, 0.05);
+    background: #fff;
 }
 
 .card:active {
