@@ -59,7 +59,10 @@ class TimeCard extends Component {
                 D.div({ className: 'card__title' },
                     this.props.card.get('title')
                 ),
-                D.div({ className: 'card__value' },
+                D.div(
+                    {
+                        className: `card__value ${ this.isRunning() ? 'card__value_running' : '' }`
+                    },
                     formatDuration(
                         Math.floor(this.getTime() / 1000))
                 )

@@ -33,6 +33,10 @@
     line-height: 1.1;
 }
 
+.card__value_running {
+    color: rgb(124, 165, 73);
+}
+
 .card__controls {
     display: flex;
 }

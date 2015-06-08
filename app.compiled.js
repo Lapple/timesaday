@@ -384,7 +384,9 @@ var TimeCard = (function (_Component) {
     }, {
         key: 'render',
         value: function render() {
-            return _react.DOM.div({ className: 'card', onClick: this.toggle.bind(this) }, _react.DOM.div({ className: 'card__title' }, this.props.card.get('title')), _react.DOM.div({ className: 'card__value' }, (0, _hhmmss2['default'])(Math.floor(this.getTime() / 1000))));
+            return _react.DOM.div({ className: 'card', onClick: this.toggle.bind(this) }, _react.DOM.div({ className: 'card__title' }, this.props.card.get('title')), _react.DOM.div({
+                className: 'card__value ' + (this.isRunning() ? 'card__value_running' : '')
+            }, (0, _hhmmss2['default'])(Math.floor(this.getTime() / 1000))));
         }
     }]);
 
