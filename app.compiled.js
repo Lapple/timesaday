@@ -163,6 +163,11 @@ var Dashboard = (function (_Component) {
             this.props.onChange(this.props.cards.set(index, value));
         }
     }, {
+        key: 'delete',
+        value: function _delete(index) {
+            this.props.onChange(this.props.cards['delete'](index));
+        }
+    }, {
         key: 'render',
         value: function render() {
             return _react.DOM.div({ className: 'dashboard' }, this.props.cards.map(this.renderCard, this), _react.DOM.div({ className: 'dashboard__item' }, newCard({
@@ -172,17 +177,16 @@ var Dashboard = (function (_Component) {
     }, {
         key: 'renderCard',
         value: function renderCard(c, index) {
-            if (isTimeCard(c)) {
-                return _react.DOM.div({ className: 'dashboard__item', key: index }, timeCard({
-                    card: c,
-                    onSave: this.save.bind(this, index)
-                }));
-            } else {
-                return _react.DOM.div({ className: 'dashboard__item', key: index }, countCard({
-                    card: c,
-                    onSave: this.save.bind(this, index)
-                }));
-            }
+            return _react.DOM.div({ className: 'dashboard__item', key: index }, isTimeCard(c) ? timeCard({
+                card: c,
+                onSave: this.save.bind(this, index)
+            }) : countCard({
+                card: c,
+                onSave: this.save.bind(this, index)
+            }), _react.DOM.div({
+                className: 'dashboard__delete',
+                onClick: this['delete'].bind(this, index)
+            }));
         }
     }]);
 

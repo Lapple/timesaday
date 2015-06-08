@@ -14,6 +14,11 @@ class Dashboard extends Component {
             this.props.cards.set(index, value)
         );
     }
+    delete(index) {
+        this.props.onChange(
+            this.props.cards.delete(index)
+        );
+    }
     render() {
         return (
             D.div({ className: 'dashboard' },
@@ -27,21 +32,25 @@ class Dashboard extends Component {
         );
     }
     renderCard(c, index) {
-        if (isTimeCard(c)) {
-            return D.div({ className: 'dashboard__item', key: index },
-                timeCard({
-                    card: c,
-                    onSave: this.save.bind(this, index)
-                })
-            );
-        } else {
-            return D.div({ className: 'dashboard__item', key: index },
-                countCard({
-                    card: c,
-                    onSave: this.save.bind(this, index)
-                })
-            );
-        }
+        return D.div({ className: 'dashboard__item', key: index },
+            (
+                isTimeCard(c) ?
+                    timeCard({
+                        card: c,
+                        onSave: this.save.bind(this, index)
+                    }) :
+                    countCard({
+                        card: c,
+                        onSave: this.save.bind(this, index)
+                    })
+            ),
+            D.div(
+                {
+                    className: 'dashboard__delete',
+                    onClick: this.delete.bind(this, index)
+                }
+            )
+        );
     }
 };
 

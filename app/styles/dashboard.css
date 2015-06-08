@@ -10,6 +10,35 @@ body {
 }
 
 .dashboard__item {
+    /* To position `.dashboard__delete` */
+    position: relative;
     flex-shrink: 0;
     width: 25%;
+}
+
+.dashboard__delete {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+
+    height: 20px;
+    width: 20px;
+
+    line-height: 18px;
+    text-align: center;
+    color: rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.dashboard__item:hover .dashboard__delete {
+    color: rgba(0, 0, 0, 0.3);
+}
+
+.dashboard__item:hover .dashboard__delete:hover {
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.dashboard__delete:after {
+    content: '×';
 }
