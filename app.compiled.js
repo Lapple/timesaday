@@ -5493,7 +5493,8 @@ var symbol = React.createFactory(Symbol);
 var TransitiveNumber = React.createClass({
     getDefaultProps: function() {
         return {
-            className: null
+            className: null,
+            enableInitialAnimation: false
         };
     },
     render: function() {
@@ -5515,9 +5516,10 @@ var TransitiveNumber = React.createClass({
                     return symbol({
                         symbol: s,
                         inverted: inverted,
+                        enableInitialAnimation: this.props.enableInitialAnimation,
                         key: index
                     });
-                })
+                }, this)
         );
     }
 });
@@ -5535,7 +5537,8 @@ var Symbol = React.createClass({
     getInitialState: function() {
         return {
             previous: null,
-            decrementing: false
+            decrementing: false,
+            initialRender: true
         };
     },
     componentDidMount: function() {
@@ -5554,7 +5557,8 @@ var Symbol = React.createClass({
                     this.props.inverted ?
                         !decrementing :
                         decrementing
-                )
+                ),
+                initialRender: false
             });
         }
     },
@@ -5597,7 +5601,12 @@ var Symbol = React.createClass({
     renderTransitionIn: function() {
         return transition({
             value: this.props.symbol,
-            up: this.state.decrementing,
+            goingUp: this.state.decrementing,
+            animateEntrance: (
+                this.state.initialRender ?
+                    this.props.enableInitialAnimation :
+                    true
+            ),
             key: this.props.symbol
         });
     },
@@ -5605,8 +5614,8 @@ var Symbol = React.createClass({
         if (this.state.previous !== null) {
             return transition({
                 value: this.state.previous,
+                goingUp: this.state.decrementing,
                 out: true,
-                up: this.state.decrementing,
                 key: this.state.previous
             });
         }
@@ -5635,7 +5644,13 @@ var D = React.DOM;
 
 var Transition = React.createClass({
     getInitialState: function() {
-        return { in: false };
+        return {
+            in: (
+                this.props.out ?
+                    true :
+                    !this.props.animateEntrance
+            )
+        };
     },
     componentDidMount: function() {
         this._timeout = raf(this.tada);
@@ -5679,11 +5694,11 @@ var Transition = React.createClass({
     },
     getTransform: function() {
         if (this.props.out) {
-            return translateY(this.props.up);
+            return translateY(this.props.goingUp);
         }
 
         if (!this.state.in) {
-            return translateY(!this.props.up);
+            return translateY(!this.props.goingUp);
         }
 
         // This has better text rendering in FF than simply `none`.
