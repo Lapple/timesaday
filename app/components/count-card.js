@@ -1,4 +1,7 @@
-import {Component, DOM as D} from 'react';
+import {Component, createFactory, DOM as D} from 'react';
+import TransitiveNumber from 'react-transitive-number';
+
+let transitiveNumber = createFactory(TransitiveNumber);
 
 class CountCard extends Component {
     increment() {
@@ -14,7 +17,10 @@ class CountCard extends Component {
                     this.props.card.get('title')
                 ),
                 D.div({ className: 'card__value' },
-                    this.props.card.get('count')
+                    transitiveNumber(
+                        null,
+                        this.props.card.get('count')
+                    )
                 )
             )
         );

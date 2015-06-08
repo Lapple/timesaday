@@ -14,7 +14,8 @@
     "browserify": "10.2.3",
     "hhmmss": "1.0.0",
     "immutable": "3.7.3",
-    "react": "0.13.3"
+    "react": "0.13.3",
+    "react-transitive-number": "1.0.1"
   },
   "devDependencies": {
     "watchify": "^3.2.1"
