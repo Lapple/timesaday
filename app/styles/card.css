@@ -19,11 +19,11 @@
     box-shadow: 0 1px 0 1px rgba(0, 0, 0, 0.05);
 }
 
-.card_form {
+.card_new {
     cursor: default;
 }
 
-.card_form:active {
+.card_new:active {
     transform: none;
     box-shadow: 0 1px 0 2px rgba(0, 0, 0, 0.05);
 }

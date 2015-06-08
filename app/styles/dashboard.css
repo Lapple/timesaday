@@ -9,6 +9,51 @@ body {
     font: 18px/1.4 'Helvetica Neue', sans-serif;
 }
 
+.dashboard__header {
+    width: 100%;
+    height: 16px;
+    flex-shrink: 0;
+    padding: 0 6px;
+    box-sizing: border-box;
+    font-size: 14px;
+    line-height: 16px;
+}
+
+.dashboard__header-title {
+    display: inline-block;
+    margin-right: 0.5em;
+
+    vertical-align: top;
+    font-weight: 600;
+    color: #96918E;
+}
+
+.dashboard__header-title:after {
+    content: '/';
+
+    display: inline-block;
+    margin-left: 0.5em;
+
+    font-weight: 300;
+    opacity: 0.5;
+}
+
+.dashboard__header-button {
+    margin: 0;
+    padding: 0;
+
+    border: 0;
+    background: none;
+    color: rgba(0, 0, 0, 0.6);
+    cursor: pointer;
+    font-size: 11px;
+    line-height: 16px;
+}
+
+.dashboard__action-button:hover {
+    color: #000;
+}
+
 .dashboard__item {
     /* To position `.dashboard__delete` */
     position: relative;
@@ -26,19 +71,15 @@ body {
 
     line-height: 18px;
     text-align: center;
-    color: rgba(0, 0, 0, 0.05);
+    color: rgba(0, 0, 0, 0.3);
     cursor: pointer;
     transition: 0.2s;
 }
 
-.dashboard__item:hover .dashboard__delete {
-    color: rgba(0, 0, 0, 0.3);
-}
-
-.dashboard__item:hover .dashboard__delete:hover {
+.dashboard__delete:hover {
     color: rgba(0, 0, 0, 0.5);
 }
 
 .dashboard__delete:after {
-    content: '×';
+    content: '\0000D7';
 }

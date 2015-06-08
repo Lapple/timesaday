@@ -9,6 +9,13 @@ let timeCard = createFactory(TimeCard);
 let newCard = createFactory(NewCard);
 
 class Dashboard extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            editing: false
+        };
+    }
     save(index, value) {
         this.props.onChange(
             this.props.cards.set(index, value)
@@ -19,17 +26,15 @@ class Dashboard extends Component {
             this.props.cards.delete(index)
         );
     }
-    render() {
-        return (
-            D.div({ className: 'dashboard' },
-                this.props.cards.map(this.renderCard, this),
-                D.div({ className: 'dashboard__item' },
-                    newCard({
-                        onSave: this.save.bind(this, this.props.cards.size)
-                    })
-                )
-            )
-        );
+    startEditing() {
+        this.setState({
+            editing: true
+        })
+    }
+    finishEditing() {
+        this.setState({
+            editing: false
+        })
     }
     renderCard(c, index) {
         return D.div({ className: 'dashboard__item', key: index },
@@ -44,11 +49,66 @@ class Dashboard extends Component {
                         onSave: this.save.bind(this, index)
                     })
             ),
-            D.div(
+            (
+                this.state.editing ?
+                    D.div(
+                        {
+                            className: 'dashboard__delete',
+                            onClick: this.delete.bind(this, index)
+                        }
+                    ) :
+                    null
+            )
+        );
+    }
+    renderAddCard() {
+        if (this.state.editing) {
+            return (
+                D.div({ className: 'dashboard__item' },
+                    newCard({
+                        onSave: this.save.bind(this, this.props.cards.size)
+                    })
+                )
+            );
+        }
+
+        return null;
+    }
+    renderHeaderActions() {
+        if (this.state.editing) {
+            return D.button(
                 {
-                    className: 'dashboard__delete',
-                    onClick: this.delete.bind(this, index)
-                }
+                    type: 'button',
+                    className: 'dashboard__header-button',
+                    onClick: this.finishEditing.bind(this)
+                },
+                'Done editing'
+            );
+        } else {
+            return D.button(
+                {
+                    type: 'button',
+                    className: 'dashboard__header-button',
+                    onClick: this.startEditing.bind(this)
+                },
+                'Edit cards'
+            );
+        }
+    }
+    render() {
+        return (
+            D.div(
+                { className: 'dashboard' },
+                D.div(
+                    { className: 'dashboard__header' },
+                    D.span(
+                        { className: 'dashboard__header-title' },
+                        document.title
+                    ),
+                    this.renderHeaderActions()
+                ),
+                this.props.cards.map(this.renderCard, this),
+                this.renderAddCard()
             )
         );
     }
