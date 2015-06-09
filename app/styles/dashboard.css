@@ -38,8 +38,12 @@ body {
     opacity: 0.5;
 }
 
-.dashboard__header-button {
-    margin: 0;
+.dashboard__actions {
+    display: inline-block;
+}
+
+.dashboard__action-button {
+    margin: 0 12px 0 0;
     padding: 0;
 
     border: 0;
@@ -52,6 +56,14 @@ body {
 
 .dashboard__action-button:hover {
     color: #000;
+}
+
+.dashboard__action-button_danger {
+    color: rgb(213, 108, 89);
+}
+
+.dashboard__action-button_danger:hover {
+    color: rgb(255, 50, 13);
 }
 
 .dashboard__item {

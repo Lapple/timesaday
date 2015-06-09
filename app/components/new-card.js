@@ -18,7 +18,8 @@ class NewCard extends Component {
         this.props.onSave(
             fromJS({
                 title: this.state.title.trim(),
-                count: 0
+                type: 'count',
+                value: 0
             }));
 
         this.setState(

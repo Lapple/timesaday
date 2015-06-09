@@ -5,10 +5,10 @@ let transitiveNumber = createFactory(TransitiveNumber);
 
 class CountCard extends Component {
     increment() {
-        let count = this.props.card.get('count');
+        let count = this.props.card.get('value');
 
         this.props.onSave(
-            this.props.card.set('count', count + 1));
+            this.props.card.set('value', count + 1));
     }
     render() {
         return (
@@ -19,7 +19,7 @@ class CountCard extends Component {
                 D.div({ className: 'card__value' },
                     transitiveNumber(
                         null,
-                        this.props.card.get('count')
+                        this.props.card.get('value')
                     )
                 )
             )

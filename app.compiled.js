@@ -104,14 +104,14 @@ var CountCard = (function (_Component) {
     _createClass(CountCard, [{
         key: 'increment',
         value: function increment() {
-            var count = this.props.card.get('count');
+            var count = this.props.card.get('value');
 
-            this.props.onSave(this.props.card.set('count', count + 1));
+            this.props.onSave(this.props.card.set('value', count + 1));
         }
     }, {
         key: 'render',
         value: function render() {
-            return _react.DOM.div({ className: 'card', onClick: this.increment.bind(this) }, _react.DOM.div({ className: 'card__title' }, this.props.card.get('title')), _react.DOM.div({ className: 'card__value' }, transitiveNumber(null, this.props.card.get('count'))));
+            return _react.DOM.div({ className: 'card', onClick: this.increment.bind(this) }, _react.DOM.div({ className: 'card__title' }, this.props.card.get('title')), _react.DOM.div({ className: 'card__value' }, transitiveNumber(null, this.props.card.get('value'))));
         }
     }]);
 
@@ -180,6 +180,13 @@ var Dashboard = (function (_Component) {
             this.props.onChange(this.props.cards['delete'](index));
         }
     }, {
+        key: 'resetCounters',
+        value: function resetCounters() {
+            this.props.onChange(this.props.cards.map(function (c) {
+                return c.set('value', 0);
+            }));
+        }
+    }, {
         key: 'startEditing',
         value: function startEditing() {
             this.setState({
@@ -196,7 +203,7 @@ var Dashboard = (function (_Component) {
     }, {
         key: 'renderCard',
         value: function renderCard(c, index) {
-            return _react.DOM.div({ className: 'dashboard__item', key: index }, isTimeCard(c) ? timeCard({
+            return _react.DOM.div({ className: 'dashboard__item', key: index }, c.get('type') === 'time' ? timeCard({
                 card: c,
                 onSave: this.save.bind(this, index)
             }) : countCard({
@@ -222,17 +229,21 @@ var Dashboard = (function (_Component) {
         key: 'renderHeaderActions',
         value: function renderHeaderActions() {
             if (this.state.editing) {
-                return _react.DOM.button({
+                return _react.DOM.div({ className: 'dashboard__actions' }, _react.DOM.button({
                     type: 'button',
-                    className: 'dashboard__header-button',
+                    className: 'dashboard__action-button',
                     onClick: this.finishEditing.bind(this)
-                }, 'Done editing');
-            } else {
-                return _react.DOM.button({
+                }, 'Done editing'), _react.DOM.button({
                     type: 'button',
-                    className: 'dashboard__header-button',
+                    className: 'dashboard__action-button dashboard__action-button_danger',
+                    onClick: this.resetCounters.bind(this)
+                }, 'Reset all counters'));
+            } else {
+                return _react.DOM.div({ className: 'dashboard__actions' }, _react.DOM.button({
+                    type: 'button',
+                    className: 'dashboard__action-button',
                     onClick: this.startEditing.bind(this)
-                }, 'Edit cards');
+                }, 'Edit cards'));
             }
         }
     }, {
@@ -246,10 +257,6 @@ var Dashboard = (function (_Component) {
 })(_react.Component);
 
 ;
-
-function isTimeCard(c) {
-    return typeof c.get('time') === 'number';
-}
 
 exports['default'] = Dashboard;
 module.exports = exports['default'];
@@ -298,7 +305,8 @@ var NewCard = (function (_Component) {
         value: function save(e) {
             this.props.onSave((0, _immutable.fromJS)({
                 title: this.state.title.trim(),
-                count: 0
+                type: 'count',
+                value: 0
             }));
 
             this.setState(this._getInitialState());
@@ -387,7 +395,7 @@ var TimeCard = (function (_Component) {
         key: 'toggle',
         value: function toggle() {
             if (this.isRunning()) {
-                this.props.onSave(this.props.card.set('time', this.getTime()));
+                this.props.onSave(this.props.card.set('value', this.getTime()));
 
                 this.setState(this._getInitialState());
             } else {
@@ -399,7 +407,7 @@ var TimeCard = (function (_Component) {
     }, {
         key: 'getTime',
         value: function getTime() {
-            var time = this.props.card.get('time');
+            var time = this.props.card.get('value');
 
             if (this.isRunning()) {
                 var delta = this.state.now - this.state.startTime;

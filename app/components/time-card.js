@@ -23,7 +23,7 @@ class TimeCard extends Component {
         if (this.isRunning()) {
             this.props.onSave(
                 this.props.card.set(
-                    'time',
+                    'value',
                     this.getTime()));
 
             this.setState(
@@ -35,7 +35,7 @@ class TimeCard extends Component {
         }
     }
     getTime() {
-        let time = this.props.card.get('time');
+        let time = this.props.card.get('value');
 
         if (this.isRunning()) {
             let delta = this.state.now - this.state.startTime;

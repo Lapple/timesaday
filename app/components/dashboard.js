@@ -26,6 +26,11 @@ class Dashboard extends Component {
             this.props.cards.delete(index)
         );
     }
+    resetCounters() {
+        this.props.onChange(
+            this.props.cards.map(c => c.set('value', 0))
+        );
+    }
     startEditing() {
         this.setState({
             editing: true
@@ -39,7 +44,7 @@ class Dashboard extends Component {
     renderCard(c, index) {
         return D.div({ className: 'dashboard__item', key: index },
             (
-                isTimeCard(c) ?
+                c.get('type') === 'time' ?
                     timeCard({
                         card: c,
                         onSave: this.save.bind(this, index)
@@ -76,22 +81,40 @@ class Dashboard extends Component {
     }
     renderHeaderActions() {
         if (this.state.editing) {
-            return D.button(
-                {
-                    type: 'button',
-                    className: 'dashboard__header-button',
-                    onClick: this.finishEditing.bind(this)
-                },
-                'Done editing'
+            return (
+                D.div(
+                    { className: 'dashboard__actions' },
+                    D.button(
+                        {
+                            type: 'button',
+                            className: 'dashboard__action-button',
+                            onClick: this.finishEditing.bind(this)
+                        },
+                        'Done editing'
+                    ),
+                    D.button(
+                        {
+                            type: 'button',
+                            className: 'dashboard__action-button dashboard__action-button_danger',
+                            onClick: this.resetCounters.bind(this)
+                        },
+                        'Reset all counters'
+                    )
+                )
             );
         } else {
-            return D.button(
-                {
-                    type: 'button',
-                    className: 'dashboard__header-button',
-                    onClick: this.startEditing.bind(this)
-                },
-                'Edit cards'
+            return (
+                D.div(
+                    { className: 'dashboard__actions' },
+                    D.button(
+                        {
+                            type: 'button',
+                            className: 'dashboard__action-button',
+                            onClick: this.startEditing.bind(this)
+                        },
+                        'Edit cards'
+                    )
+                )
             );
         }
     }
@@ -113,9 +136,5 @@ class Dashboard extends Component {
         );
     }
 };
-
-function isTimeCard(c) {
-    return typeof c.get('time') === 'number';
-}
 
 export default Dashboard;
