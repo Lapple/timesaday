@@ -130,21 +130,27 @@ class Dashboard extends Component {
             return (
                 D.div(
                     { className: 'dashboard__actions' },
-                    D.button(
-                        {
-                            type: 'button',
-                            className: 'dashboard__action-button',
-                            onClick: this.finishEditing.bind(this)
-                        },
-                        'Done editing'
+                    D.div(
+                        { className: 'dashboard__primary-actions' },
+                        D.button(
+                            {
+                                type: 'button',
+                                className: 'dashboard__action-button',
+                                onClick: this.finishEditing.bind(this)
+                            },
+                            'Done editing'
+                        )
                     ),
-                    D.button(
-                        {
-                            type: 'button',
-                            className: 'dashboard__action-button dashboard__action-button_danger',
-                            onClick: this.resetCounters.bind(this)
-                        },
-                        'Reset all counters'
+                    D.div(
+                        { className: 'dashboard__secondary-actions' },
+                        D.button(
+                            {
+                                type: 'button',
+                                className: 'dashboard__action-button dashboard__action-button_danger',
+                                onClick: this.resetCounters.bind(this)
+                            },
+                            'Reset all counters'
+                        )
                     )
                 )
             );
@@ -152,13 +158,16 @@ class Dashboard extends Component {
             return (
                 D.div(
                     { className: 'dashboard__actions' },
-                    D.button(
-                        {
-                            type: 'button',
-                            className: 'dashboard__action-button',
-                            onClick: this.startEditing.bind(this)
-                        },
-                        'Edit cards'
+                    D.div(
+                        { className: 'dashboard__primary-actions' },
+                        D.button(
+                            {
+                                type: 'button',
+                                className: 'dashboard__action-button',
+                                onClick: this.startEditing.bind(this)
+                            },
+                            'Edit cards'
+                        )
                     )
                 )
             );

@@ -261,21 +261,21 @@ var Dashboard = (function (_Component) {
         key: 'renderHeaderActions',
         value: function renderHeaderActions() {
             if (this.state.editing) {
-                return _react.DOM.div({ className: 'dashboard__actions' }, _react.DOM.button({
+                return _react.DOM.div({ className: 'dashboard__actions' }, _react.DOM.div({ className: 'dashboard__primary-actions' }, _react.DOM.button({
                     type: 'button',
                     className: 'dashboard__action-button',
                     onClick: this.finishEditing.bind(this)
-                }, 'Done editing'), _react.DOM.button({
+                }, 'Done editing')), _react.DOM.div({ className: 'dashboard__secondary-actions' }, _react.DOM.button({
                     type: 'button',
                     className: 'dashboard__action-button dashboard__action-button_danger',
                     onClick: this.resetCounters.bind(this)
-                }, 'Reset all counters'));
+                }, 'Reset all counters')));
             } else {
-                return _react.DOM.div({ className: 'dashboard__actions' }, _react.DOM.button({
+                return _react.DOM.div({ className: 'dashboard__actions' }, _react.DOM.div({ className: 'dashboard__primary-actions' }, _react.DOM.button({
                     type: 'button',
                     className: 'dashboard__action-button',
                     onClick: this.startEditing.bind(this)
-                }, 'Edit cards'));
+                }, 'Edit cards')));
             }
         }
     }, {
