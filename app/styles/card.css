@@ -58,13 +58,13 @@
 }
 
 .card__control_title:focus {
-    border-color: rgb(216, 180, 0);
+    border-color: rgb(184, 177, 172);
 }
 
 .card__control_submit {
     flex-shrink: 0;
     min-width: 50px;
-    background: rgb(255, 223, 0);
+    background: rgb(236, 231, 227);
     border-color: rgba(0, 0, 0, 0.15);
     color: rgba(0, 0, 0, 0.6);
     cursor: pointer;
