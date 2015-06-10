@@ -95,3 +95,35 @@ body {
 .dashboard__delete:after {
     content: '\0000D7';
 }
+
+.dashboard__move {
+    position: absolute;
+    top: 1px;
+    left: 8px;
+}
+
+.dashboard__move-button {
+    margin: 0 1px;
+    padding: 0 2px;
+
+    font-size: 0.5em;
+    border: 0;
+    background: none;
+    color: rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.dashboard__move-button:hover {
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.dashboard__move-button:before {
+    content: '\0025BA';
+
+    display: inline-block;
+}
+
+.dashboard__move-button_left:before {
+    transform: rotate(180deg);
+}

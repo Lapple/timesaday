@@ -31,6 +31,26 @@ class Dashboard extends Component {
             this.props.cards.map(c => c.set('value', 0))
         );
     }
+    moveLeft(index) {
+        this.props.onChange(
+            swap(
+                this.props.cards,
+                index,
+                Math.max(index - 1, 0)
+            )
+        );
+    }
+    moveRight(index) {
+        let cards = this.props.cards;
+
+        this.props.onChange(
+            swap(
+                cards,
+                index,
+                Math.min(index + 1, cards.size - 1)
+            )
+        )
+    }
     startEditing() {
         this.setState({
             editing: true
@@ -42,7 +62,7 @@ class Dashboard extends Component {
         })
     }
     renderCard(c, index) {
-        return D.div({ className: 'dashboard__item', key: index },
+        return D.div({ className: 'dashboard__item', key: c.get('title') },
             (
                 c.get('type') === 'time' ?
                     timeCard({
@@ -54,17 +74,43 @@ class Dashboard extends Component {
                         onSave: this.save.bind(this, index)
                     })
             ),
-            (
-                this.state.editing ?
-                    D.div(
-                        {
-                            className: 'dashboard__delete',
-                            onClick: this.delete.bind(this, index)
-                        }
-                    ) :
-                    null
-            )
+            this.renderCardActions(c, index)
         );
+    }
+    renderCardActions(c, index) {
+        if (this.state.editing) {
+            return D.div(
+                null,
+                D.div(
+                    {
+                        className: 'dashboard__delete',
+                        onClick: this.delete.bind(this, index),
+                        title: 'Delete card'
+                    }
+                ),
+                D.div(
+                    { className: 'dashboard__move' },
+                    D.button(
+                        {
+                            type: 'button',
+                            className: 'dashboard__move-button dashboard__move-button_left',
+                            onClick: this.moveLeft.bind(this, index),
+                            title: 'Move left'
+                        }
+                    ),
+                    D.button(
+                        {
+                            type: 'button',
+                            className: 'dashboard__move-button',
+                            onClick: this.moveRight.bind(this, index),
+                            title: 'Move right'
+                        }
+                    )
+                )
+            );
+        }
+
+        return null;
     }
     renderAddCard() {
         if (this.state.editing) {
@@ -136,5 +182,17 @@ class Dashboard extends Component {
         );
     }
 };
+
+function swap(list, i, j) {
+    return list.map((item, index) => {
+        if (index === i) {
+            return list.get(j);
+        } else if (index === j) {
+            return list.get(i);
+        } else {
+            return item;
+        }
+    });
+}
 
 export default Dashboard;

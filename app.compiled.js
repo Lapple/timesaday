@@ -187,6 +187,18 @@ var Dashboard = (function (_Component) {
             }));
         }
     }, {
+        key: 'moveLeft',
+        value: function moveLeft(index) {
+            this.props.onChange(swap(this.props.cards, index, Math.max(index - 1, 0)));
+        }
+    }, {
+        key: 'moveRight',
+        value: function moveRight(index) {
+            var cards = this.props.cards;
+
+            this.props.onChange(swap(cards, index, Math.min(index + 1, cards.size - 1)));
+        }
+    }, {
         key: 'startEditing',
         value: function startEditing() {
             this.setState({
@@ -203,16 +215,36 @@ var Dashboard = (function (_Component) {
     }, {
         key: 'renderCard',
         value: function renderCard(c, index) {
-            return _react.DOM.div({ className: 'dashboard__item', key: index }, c.get('type') === 'time' ? timeCard({
+            return _react.DOM.div({ className: 'dashboard__item', key: c.get('title') }, c.get('type') === 'time' ? timeCard({
                 card: c,
                 onSave: this.save.bind(this, index)
             }) : countCard({
                 card: c,
                 onSave: this.save.bind(this, index)
-            }), this.state.editing ? _react.DOM.div({
-                className: 'dashboard__delete',
-                onClick: this['delete'].bind(this, index)
-            }) : null);
+            }), this.renderCardActions(c, index));
+        }
+    }, {
+        key: 'renderCardActions',
+        value: function renderCardActions(c, index) {
+            if (this.state.editing) {
+                return _react.DOM.div(null, _react.DOM.div({
+                    className: 'dashboard__delete',
+                    onClick: this['delete'].bind(this, index),
+                    title: 'Delete card'
+                }), _react.DOM.div({ className: 'dashboard__move' }, _react.DOM.button({
+                    type: 'button',
+                    className: 'dashboard__move-button dashboard__move-button_left',
+                    onClick: this.moveLeft.bind(this, index),
+                    title: 'Move left'
+                }), _react.DOM.button({
+                    type: 'button',
+                    className: 'dashboard__move-button',
+                    onClick: this.moveRight.bind(this, index),
+                    title: 'Move right'
+                })));
+            }
+
+            return null;
         }
     }, {
         key: 'renderAddCard',
@@ -257,6 +289,18 @@ var Dashboard = (function (_Component) {
 })(_react.Component);
 
 ;
+
+function swap(list, i, j) {
+    return list.map(function (item, index) {
+        if (index === i) {
+            return list.get(j);
+        } else if (index === j) {
+            return list.get(i);
+        } else {
+            return item;
+        }
+    });
+}
 
 exports['default'] = Dashboard;
 module.exports = exports['default'];
