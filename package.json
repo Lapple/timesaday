@@ -2,7 +2,7 @@
   "name": "timesaday",
   "version": "1.0.0",
   "description": "Dashboard that collects your vital stats daily",
-  "main": "index.js",
+  "main": "app/components/app.js",
   "scripts": {
     "build": "browserify -o app.compiled.js app/app.js",
     "watch": "watchify -o app.compiled.js app/app.js -v"
