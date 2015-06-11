@@ -1,6 +1,6 @@
 {
   "name": "timesaday",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Dashboard that collects your vital stats daily",
   "main": "app/components/app.js",
   "scripts": {
