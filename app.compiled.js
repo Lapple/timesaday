@@ -31,10 +31,8 @@ var App = (function (_Component) {
 
         _get(Object.getPrototypeOf(App.prototype), 'constructor', this).call(this, props);
 
-        var storedCards = JSON.parse(localStorage.getItem('timesaday_cards'));
-
         this.state = {
-            cards: (0, _immutable.fromJS)(storedCards || props.cards)
+            cards: (0, _immutable.fromJS)(this.getCards())
         };
 
         this.save = this.save.bind(this);
@@ -43,13 +41,27 @@ var App = (function (_Component) {
     _inherits(App, _Component);
 
     _createClass(App, [{
+        key: 'getCards',
+        value: function getCards() {
+            var storedData = JSON.parse(localStorage.getItem('timesaday_cards'));
+
+            if (storedData && storedData.timestamp > this.props.data.timestamp) {
+                return storedData.cards;
+            } else {
+                return this.props.data.cards;
+            }
+        }
+    }, {
         key: 'save',
         value: function save(cards) {
             this.setState({
                 cards: cards
             });
 
-            localStorage.setItem('timesaday_cards', JSON.stringify(cards.toJS()));
+            localStorage.setItem('timesaday_cards', JSON.stringify({
+                timestamp: Date.now(),
+                cards: cards.toJS()
+            }));
         }
     }, {
         key: 'render',
@@ -25523,9 +25535,9 @@ var _componentsApp2 = _interopRequireDefault(_componentsApp);
 var app = (0, _react.createFactory)(_componentsApp2['default']);
 
 document.addEventListener('DOMContentLoaded', function () {
-    var cards = JSON.parse(document.getElementById('cards').innerHTML.trim());
+    var data = JSON.parse(document.getElementById('cards').innerHTML.trim());
 
-    (0, _react.render)(app({ cards: cards }), document.getElementById('dashboard'));
+    (0, _react.render)(app({ data: data }), document.getElementById('dashboard'));
 });
 
 },{"./components/app":1,"react":166}]},{},[167]);

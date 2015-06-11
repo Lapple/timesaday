@@ -9,15 +9,22 @@ class App extends Component {
     constructor(props) {
         super(props);
 
-        let storedCards = JSON.parse(
-            localStorage.getItem('timesaday_cards')
-        );
-
         this.state = {
-            cards: fromJS(storedCards || props.cards)
+            cards: fromJS(this.getCards())
         };
 
         this.save = this.save.bind(this);
+    }
+    getCards() {
+        let storedData = JSON.parse(
+            localStorage.getItem('timesaday_cards')
+        );
+
+        if (storedData && storedData.timestamp > this.props.data.timestamp) {
+            return storedData.cards;
+        } else {
+            return this.props.data.cards;
+        }
     }
     save(cards) {
         this.setState({
@@ -26,7 +33,10 @@ class App extends Component {
 
         localStorage.setItem(
             'timesaday_cards',
-            JSON.stringify(cards.toJS())
+            JSON.stringify({
+                timestamp: Date.now(),
+                cards: cards.toJS()
+            })
         );
     }
     render() {
