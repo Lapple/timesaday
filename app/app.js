@@ -8,8 +8,29 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('cards').innerHTML.trim()
     );
 
+    let storedData = JSON.parse(
+        localStorage.getItem('timesaday_cards')
+    );
+
+    let mostRecentData = (
+        (storedData && storedData.timestamp > data.timestamp) ?
+            storedData :
+            data
+    );
+
     render(
-        app({ data: data }),
+        app({
+            cards: mostRecentData.cards,
+            onUpdate: (cards) => {
+                localStorage.setItem(
+                    'timesaday_cards',
+                    JSON.stringify({
+                        timestamp: Date.now(),
+                        cards: cards
+                    })
+                );
+            }
+        }),
         document.getElementById('dashboard')
     );
 });
